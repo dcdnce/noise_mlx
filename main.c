@@ -29,15 +29,14 @@ int	main(void) {
 
 	for(int j = 0 ; j < 4 ; j++) {
 		color = ft_create_trgb(0, j * 50, 100 + j * 40, 255);
-		for (int i = 0 ; i < numSteps - 1; ++i) {
+		for (int i = 0 ; i < numSteps; ++i) {
 			a.x = ((float)i / ((float)numSteps - 1) * D_kMaxVertices);
 			a.y = eval(a.x);
-			// printf("Noise at %f : %f\n", a.x, a.y);
 
 			v_old = v;
-			//v.x = (i * W / numSteps);
+			//v.x = (i * W / numSteps); //fullscreen
 			v.x = i + (W / 4 * j);
-			v.y = ((H + scale) / 2 - a.y * scale);
+			v.y = (H + scale) / 2 - a.y * scale;
 			// if (v_old.x + v_old.y != 0)
 			// 	dda(v_old, v);
 			pixelPut(&g_n.img, v.x, v.y, color);

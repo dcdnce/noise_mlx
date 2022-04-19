@@ -17,8 +17,8 @@ float	lerp(const float lo, const float hi, const float t) {
 float	eval(const float x) {
 	int	xMin = (int)x;
 	int	xMax = xMin + 1;
-	if (xMin > D_kMaxVertices - 1)
-		return (-1);
+	if (xMin == D_kMaxVertices - 1)
+		xMax = 0;
 	float	t = x - xMin;
 	return (lerp(g_n.r[xMin], g_n.r[xMax], t));
 }
