@@ -20,7 +20,7 @@ int	main(void) {
 
 	valueNoise1D(2011);
 
-	const int	scale = 40;
+	const int	scale = 100;
 	const int	numSteps = W / 4;
 	t_vec2f		a = {0};
 	t_vec2f		v = {0};
@@ -37,13 +37,13 @@ int	main(void) {
 			//v.x = (i * W / numSteps); //fullscreen
 			v.x = i + (W / 4 * j);
 			v.y = (H + scale) / 2 - a.y * scale;
-			// if (v_old.x + v_old.y != 0)
-			// 	dda(v_old, v);
-			pixelPut(&g_n.img, v.x, v.y, color);
+			//if (v_old.x + v_old.y != 0)
+				//dda(v_old, v);
+			pixelPut(&g_n.img, v.x, v.y, color, 3);
 		}
 	}
 	
 	mlx_put_image_to_window(g_n.mlx.body, g_n.mlx.win, g_n.img.img, 0, 0);
-	mlx_loop_hook(g_n.mlx.body, loop, NULL);
+	//mlx_loop_hook(g_n.mlx.body, loop, NULL);
 	mlx_loop(g_n.mlx.body);
 };

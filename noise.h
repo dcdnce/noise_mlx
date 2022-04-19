@@ -62,7 +62,7 @@ void	dda(t_vec2f a, t_vec2f b);
 /*	mlx.c	*/
 int		ft_create_trgb(int t, int r, int g, int b);
 void	initMlx(void);
-void	pixelPut(t_imgdata *img, int x, int y, int color);
+void	pixelPut(t_imgdata *img, int x, int y, int color, int size);
 
 /*	noise.c	*/
 void	valueNoise1D(long seed);

@@ -11,7 +11,7 @@ void	dda(t_vec2f a, t_vec2f b) {
 	dx /= step;
 	dy /= step;
 	while (i <= step) {
-		pixelPut(&g_n.img, a.x, a.y, 0x00ff0000);
+		pixelPut(&g_n.img, a.x, a.y, 0x00ff0000, 1);
 		a.x += dx;
 		a.y += dy;
 		i += 1;
