@@ -20,5 +20,6 @@ float	eval(const float x) {
 	if (xMin == D_kMaxVertices - 1)
 		xMax = 0;
 	float	t = x - xMin;
+	t = (1 - cos(t * M_PI)) * 0.5; // cos curve
 	return (lerp(g_n.r[xMin], g_n.r[xMax], t));
 }

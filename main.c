@@ -20,14 +20,15 @@ int	main(void) {
 
 	valueNoise1D(2011);
 
-	const int	scale = 100;
-	const int	numSteps = W / 4;
+	const int	scale = 50;
+	const int	numSteps = W;
 	t_vec2f		a = {0};
 	t_vec2f		v = {0};
 	t_vec2f		v_old = {0};
 	int			color;
 
-	for(int j = 0 ; j < 4 ; j++) {
+	int j = 0;
+	//for(int j = 0 ; j < 4 ; j++) {
 		color = ft_create_trgb(0, j * 50, 100 + j * 40, 255);
 		for (int i = 0 ; i < numSteps; ++i) {
 			a.x = ((float)i / ((float)numSteps - 1) * D_kMaxVertices);
@@ -39,9 +40,9 @@ int	main(void) {
 			v.y = (H + scale) / 2 - a.y * scale;
 			//if (v_old.x + v_old.y != 0)
 				//dda(v_old, v);
-			pixelPut(&g_n.img, v.x, v.y, color, 3);
+			pixelPut(&g_n.img, v.x, v.y, color, 10);
 		}
-	}
+	//}
 	
 	mlx_put_image_to_window(g_n.mlx.body, g_n.mlx.win, g_n.img.img, 0, 0);
 	//mlx_loop_hook(g_n.mlx.body, loop, NULL);
