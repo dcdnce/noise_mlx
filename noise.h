@@ -4,7 +4,7 @@
 
 #define W 1920
 #define H 960
-#define D_kMaxVertices 100
+#define D_kMaxVertices	10 
 
 typedef struct s_vec2
 {
@@ -60,6 +60,7 @@ t_noise	g_n;
 void	dda(t_vec2f a, t_vec2f b);
 
 /*	mlx.c	*/
+int		ft_create_trgb(int t, int r, int g, int b);
 void	initMlx(void);
 void	pixelPut(t_imgdata *img, int x, int y, int color);
 
