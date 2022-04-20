@@ -1,7 +1,7 @@
 #include "noise.h"
 #include <math.h>
 
-void	dda(t_vec2f a, t_vec2f b) {
+void	dda(t_vec2f a, t_vec2f b, const int size) {
 	int		i = 0;
 	int		step;
 	float	dx = b.x - a.x;
@@ -11,7 +11,7 @@ void	dda(t_vec2f a, t_vec2f b) {
 	dx /= step;
 	dy /= step;
 	while (i <= step) {
-		pixelPut(&g_n.img, a.x, a.y, 0x00ff0000, 1);
+		pixelPut(&g_n.img, a.x, a.y, 0x00ff0000, size);
 		a.x += dx;
 		a.y += dy;
 		i += 1;

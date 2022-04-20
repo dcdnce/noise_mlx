@@ -57,7 +57,7 @@ typedef struct	s_noise
 t_noise	g_n;
 
 /*	dda.c	*/
-void	dda(t_vec2f a, t_vec2f b);
+void	dda(t_vec2f a, t_vec2f b, const int size);
 
 /*	mlx.c	*/
 int		ft_create_trgb(int t, int r, int g, int b);
@@ -68,4 +68,5 @@ void	pixelPut(t_imgdata *img, int x, int y, int color, int size);
 void	valueNoise1D(long seed);
 float	lerp(const float lo, const float hi, const float t);
 float	eval(const float x);
+
 #endif
