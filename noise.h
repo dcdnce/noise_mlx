@@ -4,7 +4,7 @@
 
 #define W 1920
 #define H 960
-#define D_kMaxVertices	100 
+#define D_kMaxVertices	256 
 
 typedef struct s_vec2
 {
@@ -51,7 +51,7 @@ typedef struct	s_noise
 {
 	t_imgdata 	img;
 	t_mlxdata	mlx;
-	float		r[100];
+	float		r[D_kMaxVertices];
 }			 	t_noise;
 
 t_noise	g_n;
@@ -64,9 +64,10 @@ int		ft_create_trgb(int t, int r, int g, int b);
 void	initMlx(void);
 void	pixelPut(t_imgdata *img, int x, int y, int color, int size);
 
-/*	noise.c	*/
-void	valueNoise1D(long seed);
+/*	noise1D.c	*/
+void	noise1D(void);
+
+/* utils.c	*/
 float	lerp(const float lo, const float hi, const float t);
-float	eval(const float x);
 
 #endif
