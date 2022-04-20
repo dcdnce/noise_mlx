@@ -5,6 +5,7 @@
 #define W 1920
 #define H 960
 #define D_kMaxVertices	256 
+#define D_kMaxVerticesMask 256 - 1
 
 typedef struct s_vec2
 {
@@ -52,12 +53,13 @@ typedef struct	s_noise
 	t_imgdata 	img;
 	t_mlxdata	mlx;
 	float		r[D_kMaxVertices];
+	float		r2[D_kMaxVertices * D_kMaxVertices];
 }			 	t_noise;
 
 t_noise	g_n;
 
 /*	dda.c	*/
-void	dda(t_vec2f a, t_vec2f b, const int size);
+void	dda(t_vec2f a, t_vec2f b, const int size, const int color);
 
 /*	mlx.c	*/
 int		ft_create_trgb(int t, int r, int g, int b);
