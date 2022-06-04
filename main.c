@@ -6,6 +6,8 @@
 #include "mlx.h"
 #include "noise.h"
 
+t_noise	g_n;
+
 int	loop(void *param)
 {
 	(void) param;

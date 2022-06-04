@@ -5,9 +5,10 @@ C = gcc
 
 # Compiler flags (+ where to find headers)
 CFLAGS = -Wall -Wextra
-CFLAGS += -I/usr/include -Imlx
+CFLAGS += -I/usr/include -Imlx -Iminilibx-linux
 # Linking flags(+ where to find libs)
-LFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
+LFLAGS_MAC = -Lmlx -lmlx -framework OpenGL -framework AppKit
+LFLAGS = -L/usr/lib -Lminilibx-linux -lmlx -L/usr/lib/x86_64-linux-gnu -lXext -lX11 -lm -lbsd
 
 NAME = noise_bin
 

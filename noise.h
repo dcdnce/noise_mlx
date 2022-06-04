@@ -56,7 +56,7 @@ typedef struct	s_noise
 	float		r2[D_kMaxVertices * D_kMaxVertices];
 }			 	t_noise;
 
-t_noise	g_n;
+extern t_noise	g_n;
 
 /*	dda.c	*/
 void	dda(t_vec2f a, t_vec2f b, const int size, const int color);
