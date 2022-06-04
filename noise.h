@@ -2,10 +2,10 @@
 #define NOISE_H
 #include <mlx.h>
 
-#define W 1920
-#define H 960
-#define D_kMaxVertices	256 
-#define D_kMaxVerticesMask 256 - 1
+#define W 480
+#define H 480
+#define D_kMaxVertices	25 
+#define D_kMaxVerticesMask 25 - 1
 
 typedef struct s_vec2
 {
