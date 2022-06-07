@@ -1,4 +1,4 @@
-SRCS = main.c mlx.c dda.c noise1D.c utils.c
+SRCS = main.c mlx.c dda.c noise1D.c noise2D.c utils.c
 OBJS = $(SRCS:.c=.o)
 
 C = gcc

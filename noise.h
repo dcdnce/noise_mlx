@@ -2,10 +2,10 @@
 #define NOISE_H
 #include <mlx.h>
 
-#define W 480
-#define H 480
-#define D_kMaxVertices	25 
-#define D_kMaxVerticesMask 25 - 1
+#define W 400
+#define H 400
+#define D_kMaxVertices	4 
+#define D_kMaxVerticesMask 4 - 1
 
 typedef struct s_vec2
 {
@@ -68,6 +68,9 @@ void	pixelPut(t_imgdata *img, int x, int y, int color, int size);
 
 /*	noise1D.c	*/
 void	noise1D(void);
+
+/*	noise2D.c	*/
+void	noise2D(void);
 
 /* utils.c	*/
 float	lerp(const float lo, const float hi, const float t);
