@@ -12,12 +12,12 @@ static inline void	printSquares(void) {
 		v2.y = H / D_kMaxVertices * i;
 		v1.x = 0; 
 		v2.x = W; 
-		dda(v1, v2, 2, 0xffff0000);
+		dda(v1, v2, 1, 0xffff0000);
 		v1.x = v1.y;
 		v2.x = v2.y;
 		v1.y = 0;
 		v2.y = H;
-		dda(v1, v2, 2, 0xffff0000);
+		dda(v1, v2, 1, 0xffff0000);
 	}
 }
 
@@ -31,20 +31,20 @@ static inline void	valueNoise2D(long seed) {
 static inline float	eval(const t_vec2f v) {
 	//get c00 / c10
 	//get c01 / c11
-	int	c00 = (int)v.x + ((int)v.y * D_kMaxVertices);
+	int	c00 = (int)v.x + (int)v.y * (int)D_kMaxVertices;
 	int	c10 = c00 + 1;
 	int c01 = c00 + D_kMaxVertices;
 	int	c11 = c10 + D_kMaxVertices;
 
-	printf("for v.x:%f v.y:%f -> c00:%d\n", v.x, v.y, c00);
+	//printf("for v.x:%f v.y:%f -> c00:%d\n", v.x, v.y, c00);
 	
 	//get nx0 and nx1
-	float tx = v.x - (float)c00;
+	float tx = v.x - (int)v.x;
 	float nx0 = lerp(g_n.r2[c00], g_n.r2[c10], tx);
 	float nx1 = lerp(g_n.r2[c01], g_n.r2[c11], tx);
 
 	//return pnoise
-	float ty = v.y - (float)c00;
+	float ty = v.y - (int)v.y;
 	float pNoise = lerp(nx0, nx1, ty);
 	return (pNoise);
 }
@@ -60,8 +60,6 @@ void	noise2D(void) {
 
 	for (int h = 0 ; h < H ; h++) {
 		for (int w = 0 ; w < W ; w++) {
-			if (h == 15)
-				while (1);
 
 			//eval coords
 			v.x = ((float)w / (float)numSteps) * D_kMaxVertices;
@@ -77,6 +75,6 @@ void	noise2D(void) {
 	}
 
 	/* Print Squares */
-	//printSquares();	
+	printSquares();	
 
 }

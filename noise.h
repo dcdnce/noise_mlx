@@ -4,7 +4,7 @@
 
 #define W 400
 #define H 400
-#define D_kMaxVertices	4 
+#define D_kMaxVertices	20 
 #define D_kMaxVerticesMask 4 - 1
 
 typedef struct s_vec2
