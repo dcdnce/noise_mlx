@@ -2,8 +2,8 @@
 #define NOISE_H
 #include <mlx.h>
 
-#define W 400
-#define H 400
+#define W 700
+#define H 700
 #define D_kMaxVertices	256 
 #define D_kMaxVerticesMask 256 - 1
 

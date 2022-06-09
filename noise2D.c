@@ -43,13 +43,13 @@ static inline float	eval(const t_vec2f v) {
 	
 	//get nx0 and nx1
 	float tx = v.x - (int)v.x;
-	//tx = pSmoothstep(tx);
+	tx = pSmoothstep(tx);
 	float nx0 = lerp(g_n.r2[c00], g_n.r2[c10], tx);
 	float nx1 = lerp(g_n.r2[c01], g_n.r2[c11], tx);
 
 	//return pnoise
 	float ty = v.y - (int)v.y;
-	//ty = pSmoothstep(ty);
+	ty = pSmoothstep(ty);
 	float pNoise = lerp(nx0, nx1, ty);
 	return (pNoise);
 }
@@ -58,10 +58,11 @@ void	noise2D(void) {
 	valueNoise2D(2011);
 
 	
-	t_vec2f	v = {0};
-	const int numSteps = H;
-	float value;
-	int color = 0xff000000;
+	t_vec2f		v = {0};
+	const int 	numSteps = H;
+	int 		color = 0xff000000;
+	float 		noiseValueMax = 0;
+	float		noiseMap[H * W] = {0};
 
 	for (int h = 0 ; h < H ; h++) {
 		for (int w = 0 ; w < W ; w++) {
@@ -69,11 +70,29 @@ void	noise2D(void) {
 			//eval coords
 			v.x = ((float)w / (float)numSteps) * D_kMaxVertices;
 			v.y = ((float)h / (float)numSteps) * D_kMaxVertices;
-			value = eval(v);
-			//printf("value at x.%f y.%f -> %f\n", v.x, v.y, value);
-			
-			//color lerp
-			int lr = (int)lerp(0, 255, value);
+
+			//fBm
+			const int	layers = 5;
+			float		scale = 1.0f;
+			float		frequency = 0.02f;
+			for (int j = 0 ; j < layers ; j++) {
+				v.x *= frequency;
+				v.y *= frequency;
+				noiseMap[w + h * W] += eval(v) * scale;
+				scale *= 0.35f;
+				frequency *= 1.8f;
+			}
+			//for normalization
+			if (noiseMap[w + h * W] > noiseValueMax)
+				noiseValueMax = noiseMap[w + h * W];
+		}
+	}
+
+	//color lerp & normalization
+	for (int h = 0 ; h < H ; h++) {
+		for (int w = 0 ; w < W ; w++) {
+			noiseMap[w + h * W] /= noiseValueMax;
+			int lr = (int)lerp(0, 255, noiseMap[w + h * W]);
 			color = ft_create_trgb(255, lr, lr, lr); 
 			pixelPut(&g_n.img, w, h, color, 1);
 		}

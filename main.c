@@ -20,8 +20,8 @@ int	loop(void *param)
 int	main(void) {
 	initMlx();
 
-	noise1D();	
-	//noise2D();	
+	//noise1D();	
+	noise2D();	
 	
 	mlx_put_image_to_window(g_n.mlx.body, g_n.mlx.win, g_n.img.img, 0, 0);
 	//mlx_loop_hook(g_n.mlx.body, loop, NULL);
