@@ -21,6 +21,10 @@ static inline void	printSquares(void) {
 	}
 }
 
+static inline float pSmoothstep(float t) {
+	return (t * t * (3 - 2 * t));
+}
+
 static inline void	valueNoise2D(long seed) { 
 	srand48(seed);
 	for (int i = 0 ; i < D_kMaxVertices * D_kMaxVertices ; i++) {
@@ -36,15 +40,16 @@ static inline float	eval(const t_vec2f v) {
 	int c01 = c00 + D_kMaxVertices;
 	int	c11 = c10 + D_kMaxVertices;
 
-	//printf("for v.x:%f v.y:%f -> c00:%d\n", v.x, v.y, c00);
 	
 	//get nx0 and nx1
 	float tx = v.x - (int)v.x;
+	//tx = pSmoothstep(tx);
 	float nx0 = lerp(g_n.r2[c00], g_n.r2[c10], tx);
 	float nx1 = lerp(g_n.r2[c01], g_n.r2[c11], tx);
 
 	//return pnoise
 	float ty = v.y - (int)v.y;
+	//ty = pSmoothstep(ty);
 	float pNoise = lerp(nx0, nx1, ty);
 	return (pNoise);
 }
@@ -69,12 +74,12 @@ void	noise2D(void) {
 			
 			//color lerp
 			int lr = (int)lerp(0, 255, value);
-			color = ft_create_trgb(255, lr, 255, 255); 
+			color = ft_create_trgb(255, lr, lr, lr); 
 			pixelPut(&g_n.img, w, h, color, 1);
 		}
 	}
 
 	/* Print Squares */
-	printSquares();	
+	//printSquares();	
 
 }
