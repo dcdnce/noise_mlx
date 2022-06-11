@@ -36,6 +36,8 @@ static inline float	eval(const t_vec2f v) {
 	//get c00 / c10
 	//get c01 / c11
 	int	c00 = (int)v.x + (int)v.y * (int)D_kMaxVertices;
+	if (c00 >= D_kMaxVertices * D_kMaxVertices)
+		c00 = 0;
 	int	c10 = c00 + 1;
 	int c01 = c00 + D_kMaxVertices;
 	int	c11 = c10 + D_kMaxVertices;
@@ -55,7 +57,7 @@ static inline float	eval(const t_vec2f v) {
 }
 
 void	noise2D(void) {
-	valueNoise2D(2011);
+	valueNoise2D(1998);
 
 	
 	t_vec2f		v = {0};
@@ -74,13 +76,17 @@ void	noise2D(void) {
 			//fBm
 			const int	layers = 5;
 			float		scale = 1.0f;
-			float		frequency = 0.02f;
+			float		frequency = 0.015f;
+			float		lacunarity = 1.8f;
+			float		gain = 0.35f;
+
+			v.x *= frequency;
+			v.y *= frequency;
 			for (int j = 0 ; j < layers ; j++) {
-				v.x *= frequency;
-				v.y *= frequency;
 				noiseMap[w + h * W] += eval(v) * scale;
-				scale *= 0.35f;
-				frequency *= 1.8f;
+				scale *= gain;
+				v.x *= lacunarity;
+				v.y *= lacunarity;
 			}
 			//for normalization
 			if (noiseMap[w + h * W] > noiseValueMax)
@@ -93,7 +99,7 @@ void	noise2D(void) {
 		for (int w = 0 ; w < W ; w++) {
 			noiseMap[w + h * W] /= noiseValueMax;
 			int lr = (int)lerp(0, 255, noiseMap[w + h * W]);
-			color = ft_create_trgb(255, lr, lr, lr); 
+			color = ft_create_trgb(255, 255 - lr, 255 - lr, 255 - lr); 
 			pixelPut(&g_n.img, w, h, color, 1);
 		}
 	}

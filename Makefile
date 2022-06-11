@@ -13,7 +13,7 @@ LFLAGS = -L/usr/lib -Lminilibx-linux -lmlx -L/usr/lib/x86_64-linux-gnu -lXext -l
 NAME = noise_bin
 
 %.o : %.c
-	$(C) $(CFLAGS) -c $< -o $@
+	$(C) $(CFLAGS) -g -c $< -o $@
 
 $(NAME): $(OBJS)
 	$(C) $^ $(LFLAGS) -o $(NAME)
