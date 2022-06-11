@@ -2,8 +2,8 @@
 #define NOISE_H
 #include <mlx.h>
 
-#define W 400
-#define H 400
+#define W 300
+#define H 300
 #define D_kMaxVertices	256 
 #define D_kMaxVerticesMask 255
 
@@ -54,6 +54,7 @@ typedef struct	s_noise
 	t_mlxdata	mlx;
 	float		r[D_kMaxVertices];
 	float		r2[D_kMaxVertices * D_kMaxVertices];
+	float		noiseMap[H * W];
 }			 	t_noise;
 
 extern t_noise	g_n;
@@ -71,6 +72,8 @@ void	noise1D(void);
 
 /*	noise2D.c	*/
 void	noise2D(void);
+/* 	noise2dtoFdf.c	*/
+void	toFdf(const float noiseValueMax);
 
 /* utils.c	*/
 float	lerp(const float lo, const float hi, const float t);

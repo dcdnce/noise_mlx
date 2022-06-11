@@ -57,18 +57,15 @@ static inline float	eval(const t_vec2f v) {
 }
 
 void	noise2D(void) {
-	valueNoise2D(1998);
+	valueNoise2D(104927);
 
-	
 	t_vec2f		v = {0};
 	const int 	numSteps = H;
 	int 		color = 0xff000000;
 	float 		noiseValueMax = 0;
-	float		noiseMap[H * W] = {0};
 
 	for (int h = 0 ; h < H ; h++) {
 		for (int w = 0 ; w < W ; w++) {
-
 			//eval coords
 			v.x = ((float)w / (float)numSteps) * D_kMaxVertices;
 			v.y = ((float)h / (float)numSteps) * D_kMaxVertices;
@@ -76,33 +73,36 @@ void	noise2D(void) {
 			//fBm
 			const int	layers = 5;
 			float		scale = 1.0f;
-			float		frequency = 0.015f;
+			float		freq = 0.015f;
 			float		lacunarity = 1.8f;
 			float		gain = 0.35f;
-
-			v.x *= frequency;
-			v.y *= frequency;
+			v.x *= freq;
+			v.y *= freq;
 			for (int j = 0 ; j < layers ; j++) {
-				noiseMap[w + h * W] += eval(v) * scale;
+				g_n.noiseMap[w + h * W] += eval(v) * scale;
 				scale *= gain;
 				v.x *= lacunarity;
 				v.y *= lacunarity;
 			}
+
 			//for normalization
-			if (noiseMap[w + h * W] > noiseValueMax)
-				noiseValueMax = noiseMap[w + h * W];
+			if (g_n.noiseMap[w + h * W] > noiseValueMax)
+				noiseValueMax = g_n.noiseMap[w + h * W];
 		}
 	}
 
 	//color lerp & normalization
 	for (int h = 0 ; h < H ; h++) {
 		for (int w = 0 ; w < W ; w++) {
-			noiseMap[w + h * W] /= noiseValueMax;
-			int lr = (int)lerp(0, 255, noiseMap[w + h * W]);
+			g_n.noiseMap[w + h * W] /= noiseValueMax;
+			int lr = (int)lerp(0, 255, g_n.noiseMap[w + h * W]);
 			color = ft_create_trgb(255, 255 - lr, 255 - lr, 255 - lr); 
 			pixelPut(&g_n.img, w, h, color, 1);
 		}
 	}
+
+	// to file
+	toFdf(noiseValueMax);
 
 	/* Print Squares */
 	//printSquares();	
