@@ -17,11 +17,15 @@ int	loop(void *param)
 	return (0);
 }
 
-int	main(void) {
+int	main(int ac, char **av) {
+	if (ac != 2) {
+		printf("Please enter a valid seed.\n");
+		return (-1);
+	}
 	initMlx();
 
-	//noise1D();	
-	noise2D();	
+	//noise2D();	
+	noise2D(ft_atoi(av[1]));	
 	
 	mlx_put_image_to_window(g_n.mlx.body, g_n.mlx.win, g_n.img.img, 0, 0);
 	//mlx_loop_hook(g_n.mlx.body, loop, NULL);

@@ -2,7 +2,7 @@
 #define NOISE_H
 #include <mlx.h>
 
-#define W 300
+#define W 300 
 #define H 300
 #define D_kMaxVertices	256 
 #define D_kMaxVerticesMask 255
@@ -71,11 +71,12 @@ void	pixelPut(t_imgdata *img, int x, int y, int color, int size);
 void	noise1D(void);
 
 /*	noise2D.c	*/
-void	noise2D(void);
+void	noise2D(int seed);
 /* 	noise2dtoFdf.c	*/
-void	toFdf(const float noiseValueMax);
+void	toFdf(void);
 
 /* utils.c	*/
 float	lerp(const float lo, const float hi, const float t);
+int		ft_atoi(const char *nptr);
 
 #endif

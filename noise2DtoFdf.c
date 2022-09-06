@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-void toFdf(const float noiseValueMax) {
+void toFdf(void) {
 	FILE*	f;
 
 	//open accordingly
@@ -16,7 +16,6 @@ void toFdf(const float noiseValueMax) {
 		for (int j = 0 ; j < W ; j++) {
 			if (j)
 				fprintf(f, " ");
-			//g_n.noiseMap[j + i * W] /= noiseValueMax;
 			fprintf(f, "%d", (int)lerp(0, 100, g_n.noiseMap[j + i * W]));
 		}
 		fprintf(f, "\n");

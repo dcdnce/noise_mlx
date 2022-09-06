@@ -56,8 +56,8 @@ static inline float	eval(const t_vec2f v) {
 	return (pNoise);
 }
 
-void	noise2D(void) {
-	valueNoise2D(104927);
+void	noise2D(int seed) {
+	valueNoise2D(seed);
 
 	t_vec2f		v = {0};
 	const int 	numSteps = H;
@@ -96,14 +96,13 @@ void	noise2D(void) {
 		for (int w = 0 ; w < W ; w++) {
 			g_n.noiseMap[w + h * W] /= noiseValueMax;
 			int lr = (int)lerp(0, 255, g_n.noiseMap[w + h * W]);
-			color = ft_create_trgb(255, 255 - lr, 255 - lr, 255 - lr); 
+			color = ft_create_trgb(0, 255 - lr, 255 - lr, 255 - lr); 
 			pixelPut(&g_n.img, w, h, color, 1);
 		}
 	}
 
 	// to file
-	toFdf(noiseValueMax);
-
+	toFdf();
 	/* Print Squares */
 	//printSquares();	
 
