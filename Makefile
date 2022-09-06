@@ -7,8 +7,12 @@ C = gcc
 CFLAGS = -Wall -Wextra
 CFLAGS += -I/usr/include -Imlx -Iminilibx-linux
 # Linking flags(+ where to find libs)
-LFLAGS_MAC = -lmlx -framework OpenGL -framework AppKit
-LFLAGS = -L/usr/lib -Lminilibx-linux -lmlx -L/usr/lib/x86_64-linux-gnu -lXext -lX11 -lm -lbsd
+OS := $(shell uname)
+ifeq ($(OS), Darwin)
+	LFLAGS = -lmlx -framework OpenGL -framework AppKit
+else
+	LFLAGS = -L/usr/lib -Lminilibx-linux -lmlx -L/usr/lib/x86_64-linux-gnu -lXext -lX11 -lm -lbsd
+endif
 
 NAME = noise_bin
 
@@ -16,7 +20,7 @@ NAME = noise_bin
 	$(C) $(CFLAGS) -g -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(C) $^ $(LFLAGS_MAC) -o $(NAME)
+	$(C) $^ $(LFLAGS) -o $(NAME)
 
 all: $(NAME)
 
