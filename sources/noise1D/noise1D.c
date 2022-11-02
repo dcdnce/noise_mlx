@@ -11,7 +11,7 @@ static inline void	valueNoise1D(long seed) {
 	}
 }
 
-static inline float	eval(const float x) {
+static inline float	interpolation(const float x) {
 	int	xMin = (int)x;
 	int	xMax = xMin + 1;
 	xMax &= D_kMaxVerticesMask;
@@ -22,8 +22,13 @@ static inline float	eval(const float x) {
 	return (lerp(g_n.r[xMin], g_n.r[xMax], t));
 }
 
-void	noise1D(void) {
-	valueNoise1D(7);
+/**
+ * @brief Main loop of the noise1D tool.
+ * 
+ */
+void	noise1D(int seed)
+{
+	valueNoise1D(seed);
 
 	const int	numSteps = W;
 
@@ -32,6 +37,7 @@ void	noise1D(void) {
 	t_vec2f		v_old = {0};
 	int			color = ft_create_trgb(0, 50, 100, 255);
 
+	//Main loop
 	for (int i = 0 ; i < numSteps; ++i) {
 		a.x = (float)i / ((float)numSteps - 1) * D_kMaxVertices;
 
@@ -41,7 +47,7 @@ void	noise1D(void) {
 		const int numLayers = 5;
 		a.y = 0;
 		for (int j = 0 ; j < numLayers ; j++) {
-			a.y += eval(a.x * frequency) * scale;
+			a.y += interpolation(a.x * frequency) * scale;
 			frequency *= 2;
 			scale *= 0.5f;
 		}

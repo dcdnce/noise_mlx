@@ -75,7 +75,7 @@ void	pixelPut(t_imgdata *img, int x, int y, int color, int size);
 void	dda(t_vec2f a, t_vec2f b, const int size, const int color);
 
 //	NOISE1D/
-void	noise1D(void);
+void	noise1D(int seed);
 
 //	NOISE2D/
 void	noise2D(int seed);
