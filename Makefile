@@ -1,10 +1,20 @@
-SRCS = main.c mlx.c dda.c noise1D.c noise2D.c noise2DtoFdf.c utils.c
+SRCS = sources/main.c \
+				sources/mlx.c \
+				sources/dda.c \
+				sources/utils.c \
+				sources/noise1D/noise1D.c \
+				sources/noise2D/noise2D.c \
+				sources/noise2D/toFdf.c \
+				sources/noise2D/interpolation.c \
+				sources/noise2D/fbm.c \
+
 OBJS = $(SRCS:.c=.o)
 
 C = gcc
 
 # Compiler flags (+ where to find headers)
 CFLAGS = -Wall -Wextra
+CFLAGS += -Iincludes
 CFLAGS += -I/usr/include -Imlx -Iminilibx-linux
 # Linking flags(+ where to find libs)
 OS := $(shell uname)
@@ -17,7 +27,7 @@ endif
 NAME = noise_bin
 
 %.o : %.c
-	$(C) $(CFLAGS) -g -c $< -o $@
+	$(C) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	$(C) $^ $(LFLAGS) -o $(NAME)

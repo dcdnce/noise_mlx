@@ -1,9 +1,17 @@
 #ifndef NOISE_H
 #define NOISE_H
+
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <fcntl.h>
 #include <mlx.h>
 
-#define W 300 
-#define H 300
+
+#define W 1000 
+#define H 1000
 #define D_kMaxVertices	256 
 #define D_kMaxVerticesMask 255
 
@@ -59,24 +67,21 @@ typedef struct	s_noise
 
 extern t_noise	g_n;
 
-/*	dda.c	*/
-void	dda(t_vec2f a, t_vec2f b, const int size, const int color);
-
-/*	mlx.c	*/
+// .
+float	lerp(const float lo, const float hi, const float t);
 int		ft_create_trgb(int t, int r, int g, int b);
 void	initMlx(void);
 void	pixelPut(t_imgdata *img, int x, int y, int color, int size);
+void	dda(t_vec2f a, t_vec2f b, const int size, const int color);
 
-/*	noise1D.c	*/
+//	NOISE1D/
 void	noise1D(void);
 
-/*	noise2D.c	*/
+//	NOISE2D/
 void	noise2D(int seed);
-/* 	noise2dtoFdf.c	*/
 void	toFdf(void);
+float	billinearInterpolation(const t_vec2f v);
+void	basicFractalSum(t_vec2f	v, int h,  int w);
 
-/* utils.c	*/
-float	lerp(const float lo, const float hi, const float t);
-int		ft_atoi(const char *nptr);
 
 #endif

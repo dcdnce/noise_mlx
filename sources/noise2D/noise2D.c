@@ -4,6 +4,11 @@
 #include <math.h>
 #include <unistd.h>
 
+/**
+ * @brief Print squares linking the different 
+ * vertices of the noiseMap, for debugging.
+ * 
+ */
 static inline void	printSquares(void) {
 	t_vec2f	v1;
 	t_vec2f	v2;
@@ -21,10 +26,11 @@ static inline void	printSquares(void) {
 	}
 }
 
-static inline float pSmoothstep(float t) {
-	return (t * t * (3 - 2 * t));
-}
-
+/**
+ * @brief Get random values for the 2D vertices.
+ * 
+ * @param seed 
+ */
 static inline void	valueNoise2D(long seed) { 
 	srand48(seed);
 	for (int i = 0 ; i < D_kMaxVertices * D_kMaxVertices ; i++) {
@@ -32,30 +38,11 @@ static inline void	valueNoise2D(long seed) {
 	}
 }
 
-static inline float	eval(const t_vec2f v) {
-	//get c00 / c10
-	//get c01 / c11
-	int	c00 = (int)v.x + (int)v.y * (int)D_kMaxVertices;
-	if (c00 >= D_kMaxVertices * D_kMaxVertices)
-		c00 = 0;
-	int	c10 = c00 + 1;
-	int c01 = c00 + D_kMaxVertices;
-	int	c11 = c10 + D_kMaxVertices;
-
-	
-	//get nx0 and nx1
-	float tx = v.x - (int)v.x;
-	tx = pSmoothstep(tx);
-	float nx0 = lerp(g_n.r2[c00], g_n.r2[c10], tx);
-	float nx1 = lerp(g_n.r2[c01], g_n.r2[c11], tx);
-
-	//return pnoise
-	float ty = v.y - (int)v.y;
-	ty = pSmoothstep(ty);
-	float pNoise = lerp(nx0, nx1, ty);
-	return (pNoise);
-}
-
+/**
+ * @brief Main function of the noise2D tool.
+ * 
+ * @param seed 
+ */
 void	noise2D(int seed) {
 	valueNoise2D(seed);
 
@@ -64,34 +51,22 @@ void	noise2D(int seed) {
 	int 		color = 0xff000000;
 	float 		noiseValueMax = 0;
 
+	//Main loop to compute noiseMap
 	for (int h = 0 ; h < H ; h++) {
 		for (int w = 0 ; w < W ; w++) {
-			//eval coords
+			//Evaluate corresponding pixel
 			v.x = ((float)w / (float)numSteps) * D_kMaxVertices;
 			v.y = ((float)h / (float)numSteps) * D_kMaxVertices;
-
-			//fBm
-			const int	layers = 5;
-			float		scale = 1.0f;
-			float		freq = 0.015f;
-			float		lacunarity = 1.8f;
-			float		gain = 0.35f;
-			v.x *= freq;
-			v.y *= freq;
-			for (int j = 0 ; j < layers ; j++) {
-				g_n.noiseMap[w + h * W] += eval(v) * scale;
-				scale *= gain;
-				v.x *= lacunarity;
-				v.y *= lacunarity;
-			}
-
-			//for normalization
+			//Basic fractal sum function
+			basicFractalSum(v, h, w);	
+			//Saving higher value of the noiseMap for normalization
 			if (g_n.noiseMap[w + h * W] > noiseValueMax)
 				noiseValueMax = g_n.noiseMap[w + h * W];
 		}
 	}
 
-	//color lerp & normalization
+	//Normalization - to keep values in range [0-1]
+	//Lerp between [0-255] for the output color
 	for (int h = 0 ; h < H ; h++) {
 		for (int w = 0 ; w < W ; w++) {
 			g_n.noiseMap[w + h * W] /= noiseValueMax;
@@ -101,9 +76,9 @@ void	noise2D(int seed) {
 		}
 	}
 
-	// to file
+	//to file
 	toFdf();
-	/* Print Squares */
+	//Print Squares
 	//printSquares();	
 
 }
